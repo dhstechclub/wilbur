@@ -65,7 +65,7 @@ function update(){
     pen.drawImage(dinoImg, 50*3, 250*3 - dinoHeight + 50*3 - dinoTallness, 50*3, dinoTallness);
 
     if(dinoHeight <= 0){
-        if(keyDown[" "]){
+        if(keyDown[" "] || keyDown["w"]){
             dinoVelocity = 15*3;
         }
     }
