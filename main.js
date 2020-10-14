@@ -1,8 +1,10 @@
 var c = document.getElementById("drawCanvas");
 var pen = c.getContext("2d");
-c.width = 400;
-c.height = 400;
+c.width = 400*3;
+c.height = 400*3;
 //not necessary to understand, just setting up canvas ^
+
+pen.font = "50px cursive";
 
 var keyDown = [];
 
@@ -18,9 +20,9 @@ setInterval(update, 1000/60);
 
 var dinoHeight = 0;
 var dinoVelocity = 0;
-var dinoTallness = 50;
+var dinoTallness = 50*3;
 var ducking = false;
-var gravity = 0.5;
+var gravity = 0.5*3;
 
 var dinoImg = new Image();
 dinoImg.src = "wilbur.png";
@@ -50,31 +52,31 @@ function update(){
         birdTimer = Math.random() * 3000 + 1000;
     }
     //clear canvas
-    pen.clearRect(0, 0, 400, 400);
+    pen.clearRect(0, 0, 400*3, 400*3);
 
     pen.fillStyle = "black";
     //draw ground
-    pen.fillRect(0, 300, 400, 100);
+    pen.fillRect(0, 300*3, 400*3, 100*3);
 
-    pen.fillText("Score: " + score, 50, 50);
+    pen.fillText("Score: " + score, 50*3, 50*3);
 
     //draw dino
-    pen.strokeRect(50, 250 - dinoHeight + 50 - dinoTallness, 50, dinoTallness);
-    pen.drawImage(dinoImg, 50, 250 - dinoHeight + 50 - dinoTallness, 50, dinoTallness);
+    pen.strokeRect(50*3, 250*3 - dinoHeight + 50*3 - dinoTallness, 50*3, dinoTallness);
+    pen.drawImage(dinoImg, 50*3, 250*3 - dinoHeight + 50*3 - dinoTallness, 50*3, dinoTallness);
 
     if(dinoHeight <= 0){
         if(keyDown[" "]){
-            dinoVelocity = 15;
+            dinoVelocity = 15*3;
         }
     }
 
     if(keyDown["s"]){
         ducking = true;
-        dinoTallness = 30;
-        dinoVelocity = -30;
+        dinoTallness = 30*3;
+        dinoVelocity = -30*3;
     } else {
         ducking = false;
-        dinoTallness = 50;
+        dinoTallness = 50*3;
     }
 
     dinoVelocity -= gravity;
@@ -85,13 +87,13 @@ function update(){
         dinoVelocity = 0;
     }
 
-    var dinoRect = [[50, 250 - dinoHeight + 50 - dinoTallness], [50, 250 - dinoHeight + 50 - dinoTallness + dinoTallness], [50 + 50, 250 - dinoHeight + 50 - dinoTallness], [50 + 50, 250 - dinoHeight + dinoTallness + 50 - dinoTallness]];
+    var dinoRect = [[50*3, 250*3 - dinoHeight + 50*3 - dinoTallness], [50*3, 250*3 - dinoHeight + 50*3 - dinoTallness + dinoTallness], [50*3 + 50*3, 250*3 - dinoHeight + 50*3 - dinoTallness], [50*3 + 50*3, 250*3 - dinoHeight + dinoTallness + 50*3 - dinoTallness]];
 
     //same as "i in" from python
     for(i of obstacles){
         i.update();
         i.draw();
-        var obstRect = [[i.x, i.y], [i.x, i.y + 25], [i.x + 25, i.y], [i.x + 25, i.y + 25]];
+        var obstRect = [[i.x, i.y], [i.x, i.y + 25*3], [i.x + 25*3, i.y], [i.x + 25*3, i.y + 25*3]];
         if(touching(dinoRect, obstRect) || touching(obstRect, dinoRect)){
             console.log("ded");
             dinoHeight = Infinity;
@@ -101,7 +103,7 @@ function update(){
     for(i of birds){
         i.update();
         i.draw();
-        var obstRect = [[i.x, i.y], [i.x, i.y + 25], [i.x + 25, i.y], [i.x + 25, i.y + 25]];
+        var obstRect = [[i.x, i.y], [i.x, i.y + 25*3], [i.x + 25*3, i.y], [i.x + 25*3, i.y + 25*3]];
         if(touching(dinoRect, obstRect) || touching(obstRect, dinoRect)){
             console.log("ded");
             dinoHeight = Infinity;
@@ -115,29 +117,29 @@ var birds = [];
 
 function obstacle(){
     obstacles.push(this);
-    this.x = 400;
-    this.y = 275;
+    this.x = 400*3;
+    this.y = 275*3;
     this.update = function(){
-        this.x -= 3;
+        this.x -= 3*3;
     }
     this.draw = function(){
         pen.fillStyle = "red";
-        pen.strokeRect(this.x, this.y, 25, 25);
-        pen.drawImage(obstacleImg, this.x, this.y, 25, 25);
+        pen.strokeRect(this.x, this.y, 25*3, 25*3);
+        pen.drawImage(obstacleImg, this.x, this.y, 25*3, 25*3);
     }
 }
 
 function bird(){
     birds.push(this);
-    this.x = 400;
-    this.y = 230;
+    this.x = 400*3;
+    this.y = 230*3;
     this.update = function(){
-        this.x -= 3;
+        this.x -= 3*3;
     }
     this.draw = function(){
         pen.fillStyle = "red";
-        pen.drawImage(birdImg, this.x, this.y, 25, 25);
-        pen.strokeRect(this.x, this.y, 25, 25);
+        pen.drawImage(birdImg, this.x, this.y, 25*3, 25*3);
+        pen.strokeRect(this.x, this.y, 25*3, 25*3);
     }
 }
 
